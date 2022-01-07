@@ -2,6 +2,16 @@
 #include <LiquidCrystal_I2C.h>
 #include <Temperature_LM75_Derived.h>
 
+/*
+TODO:
+* Use some kind of scheduler over delays, so that we can gather temperature date even while in the "Minimum On Time"
+* Use a nob or something to be able to select fan vs AC, and be able to set the high and low temperatures.
+* Add Scheduling/Clock?  Maybe we need more characters on the display for that.
+* Add a "Temporary Over-ride" Feature.  Force heat or cooling for X 10 minutes inciments.
+*/
+
+
+
 
 #define LCD_ADDR 0x27
 #define TEMP_ADDR 0x48
