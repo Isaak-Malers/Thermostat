@@ -10,9 +10,6 @@ TODO:
 * Add a "Temporary Over-ride" Feature.  Force heat or cooling for X 10 minutes inciments.
 */
 
-
-
-
 #define LCD_ADDR 0x27
 #define TEMP_ADDR 0x48
 #define HeatPin 4
@@ -28,10 +25,9 @@ byte tempAverage;
 
 byte highTemp = 82;
 byte lowTemp = 68;
-byte debounceDegrees = 3;
+byte debounceDegrees = 1;
 
-//int minOnTime = 300000; //5 minutes
-int minOnTime = 1500;
+int minOnTime = 300000;
 
 bool coolMethod = 0; //0 for fan, 1 for AC
 bool idle = 0;//begin in a non-idle state:  this will be more aggressive about getting back to the ideal temperature range.
@@ -69,6 +65,7 @@ void Idle(){
   lcd.print("Idle");
   pinMode(HeatPin, INPUT);
   pinMode(CoolPin, INPUT);
+  pinMode(FanPin, INPUT);
 }
 
 void updateCoolMethod(){
@@ -81,9 +78,8 @@ void updateCoolMethod(){
 }
 
 void UpdateTemp(){
-  //float tempC = temperature.readTemperatureC();
-  //byte tempF = (tempC*1.8) + 32;
-  byte tempF = map(analogRead(A0), 0, 1023, 60, 99);
+  float tempC = temperature.readTemperatureC();
+  byte tempF = (tempC*1.8) + 32;
   tempSamples[tempIndex] = tempF;
   tempIndex++;
   if(tempIndex == 16){
@@ -110,7 +106,6 @@ void UpdateTemp(){
 int main()
 {
   init();
-
 
   lcd.init();
   lcd.setBacklight(15);
